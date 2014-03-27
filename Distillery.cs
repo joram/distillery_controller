@@ -16,7 +16,7 @@ using GTM = Gadgeteer.Modules;
 using Gadgeteer.Modules.GHIElectronics;
 using GHI.Premium.Net;
 
-namespace Distillery
+namespace DistilleryNamespace
 {
 
     class Distillery
@@ -49,14 +49,15 @@ namespace Distillery
         }
 
         void updateState() {
-            string s = network.get_json("http://summer:8000/api/debug/fill/");
-            //screen.log(s.ToString());
+            State state = network.get_state("http://summer:8000/api/debug/fill/");
+            screen.log(""+state);
+
         }
 
         void ControllerThreadFunc()
         {
             updateState();
-            while (current_state == null || current_state.action != "shutdown")
+            while (current_state == null || current_state.action != Action.Shutdown)
             {
                 //getCurrentState();
                 //screen.updateState(current_state, false);
@@ -68,7 +69,7 @@ namespace Distillery
         // TODO
         void SensorThreadFunc()
         {
-            while (current_state == null || current_state.action != "shutdown")
+            while (current_state == null || current_state.action != Action.Shutdown)
             {
                 Thread.Sleep(3000);
             }

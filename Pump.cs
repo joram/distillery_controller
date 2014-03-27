@@ -3,7 +3,8 @@ using Gadgeteer.Modules.Seeed;
 using System.Threading;
 using Microsoft.SPOT;
 
-namespace Distillery {
+namespace DistilleryNamespace
+{
     enum PumpInput { None, Wash, Boiler };
     enum PumpOutput { None, Boiler, Disposal };
     class Pump

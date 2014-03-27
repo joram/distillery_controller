@@ -15,7 +15,7 @@ using Gadgeteer.Modules.GHIElectronics;
 using GHI.Premium.Net;
 using Json.NETMF;
 
-namespace Distillery
+namespace DistilleryNamespace
 {
 
 
@@ -72,6 +72,19 @@ namespace Distillery
                 screen.log("rsp code: " + response.StatusCode);
         }
 
+        public void get_req_ResponseReceived(HttpRequest sender, HttpResponse response)
+        {
+            if (response.StatusCode == "200")
+            {
+                this.get_response = response.Text;
+            }
+            else
+            {
+                screen.log(response.StatusCode);
+            }
+            GET_response_reveived = true;
+        }
+        
         public string get_data(string url)
         {
             this.get_response = "";
@@ -85,35 +98,16 @@ namespace Distillery
                 Thread.Sleep(200);
             }
             return this.get_response;
-        }
-        
-        public void get_req_ResponseReceived(HttpRequest sender, HttpResponse response)
+        }        
+
+        public Hashtable get_json(string url)
         {
-            if (response.StatusCode == "200")
-            {
-                this.get_response = response.Text;
-            }
-            else
-            {
-                screen.log(response.StatusCode);
-            }
-            GET_response_reveived = true;
+            return JsonSerializer.DeserializeString(get_data(url)) as Hashtable;
         }
 
-        public string get_json(string url)
-        {
-            string content = get_data(url);
-
-            object deserializedObject = JsonSerializer.DeserializeString(content);
-
-
-            return content;
-
-           // byte[] bytes = new byte[content.Length * sizeof(char)];
-            //System.Buffer.BlockCopy(content.ToCharArray(), 0, bytes, 0, bytes.Length);
-            //Reflection.State after = (State)Reflection.Deserialize(bytes, typeof(State));
+        public State get_state(string url) {
+            return new State(get_json(url));
         }
-
 
     }
 }

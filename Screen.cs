@@ -14,7 +14,7 @@ using GTM = Gadgeteer.Modules;
 using Gadgeteer.Modules.GHIElectronics;
 using GHI.Premium.Net;
 
-namespace Distillery
+namespace DistilleryNamespace
 {
 
 
@@ -106,21 +106,21 @@ namespace Distillery
             drawCenteredState("T3: " + temp_3.ToString("f2") + " C", 80, white);
 
             drawCenteredState("~ STATE ~", 100, blue);
-            if (state.action == "init")
+            if (state.action == Action.Init)
             {
                 drawCenteredState("initializing", 120, white);
             }
-            if (state.action == "shutdown")
+            if (state.action == Action.Shutdown)
             {
                 drawCenteredState("shutting down", 120, white);
             }
-            if (state.action == "pump")
+            if (state.action == Action.Pump)
             { // Pumping
                 drawCenteredState("pumping", 120, white);
                 drawCenteredState("from: " + state.src, 140, white);
                 drawCenteredState("to: " + state.dest, 160, white);
             }
-            if (state.action == "collect")
+            if (state.action == Action.Collect)
             { // collecting
                 drawCenteredState("collecting", 120, white);
                 drawCenteredState("from: " + state.min_temp.ToString("f2") + " C", 140, white);
